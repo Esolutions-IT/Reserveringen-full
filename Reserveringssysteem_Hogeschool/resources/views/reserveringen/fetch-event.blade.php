@@ -1,0 +1,21 @@
+<?php
+$conn = mysqli_connect("localhost","root","","reserveringssysteem-hogeschool") ;
+
+if (!$conn)
+{
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+}
+
+$json = array();
+$sqlQuery = "SELECT * FROM events WHERE status= 1 ORDER BY id";
+
+$result = mysqli_query($conn, $sqlQuery);
+$eventArray = array();
+while ($row = mysqli_fetch_assoc($result)) {
+    array_push($eventArray, $row);
+}
+mysqli_free_result($result);
+
+mysqli_close($conn);
+echo json_encode($eventArray);
+?>
